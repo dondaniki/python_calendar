@@ -7,28 +7,42 @@ import PyPDF2
 
 file_name='/home/daniki/Documents/devs/python_calendar/python_calendar/resources/demo.pdf'
 w_text=""
+script_version='b-0.0.1-r0-d0'
 
 
 # funciones auxiliares
 def extraer_texto():
 	# creating a pdf file object 
-	pdfFileObj = open(file_name, 'rb') 
+	pdfFile = open('demo2.pdf', 'rb') 
+	txtFile = open('demo2.txt', 'wb') 
 	  
 	# creating a pdf reader object 
-	pdfReader = PyPDF2.PdfFileReader(pdfFileObj) 
-	  
+	pdfReader = PyPDF2.PdfFileReader(pdfFile) 
+	
+	print(pdfReader.isEncrypted) 
+	
 	# printing number of pages in pdf file 
-	print(pdfReader.numPages) 
-	  
-	# creating a page object 
-	pageObj = pdfReader.getPage(0) 
-	  
-	# extracting text from page 
-	w_text = pageObj.extractText()
-	print(w_text) 
+	print 'No. paginas ' , pdfReader.numPages 
+	 
+	for page in range(0, (pdfReader.numPages -1)):		  
+		# creating a page object 
+		pageObj = pdfReader.getPage(page) 
+		  
+		# extracting text from page 
+		w_text = pageObj.extractText()
+		txtFile.write(w_text.encode('utf-8'))
+		
+		#print(w_text) 
 	  
 	# closing the pdf file object 
-	pdfFileObj.close()
+	pdfFile.close()
+	txtFile.close()
+	
+#def limpiar_texto():
+#	pdfFile = open('demo2.txt', 'rb') 
+#	txtFile = open('demo.txt', 'wb') 
+
+
 
 # funciones programa principal
 
@@ -44,6 +58,8 @@ def do_pre_job():
 	
 	# descargar_pdf
 	extraer_texto()
+	
+	#limpiar_texto()
 
 
 
